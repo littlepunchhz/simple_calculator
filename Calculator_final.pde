@@ -1,13 +1,20 @@
 String input = "";
-PFont f,f_resize;
 String num1="",num2="",op="";
-PImage img;  
-Integer size = 1;
+Integer size = 1; //set original size
+String textDisplay = "";
+
+//array for create text on button
 String[][] text_numbers =  { {"7","4","1"}, {"8","5","2"}, {"9","6","3"} };
 String[][] text_others = { {"C","0"}, {"/","."} };
-String[] text_operators = {"*","-","+","="};
+String[] text_operators = {"<-","*","-","+","="};
 String[] text_resize = {"x1","x2"};
-String textDisplay = "";
+
+//set all color
+color blue = color(15,76,129);
+color white = color(255);
+color black = color(0);
+color blue_pastel = color(197,229,239);
+color light_grey = color(244,239,239);
 
 String StringGet(String text,int index){ // get text[index]
   if (text.length() > 0){
@@ -23,9 +30,7 @@ String StringGet(String text,int index){ // get text[index]
 void setup()
 {
     size(400,450); //window size : x1
-    f = createFont("Arial",25,true); //set font
-    f_resize = createFont("Arial",15,true);
-    background(15,76,129); //set color bg : dark blue
+    background(blue); //set color bg : dark blue
     drawElements();
 }
 
@@ -36,38 +41,39 @@ void draw()
 
 void drawElements() //Draw all display io, text, buttons and image
 {
-    background(15,76,129);
+    background(blue);
     scale(size);
     
     //Display input-output
-    fill(255,255,255);
+    fill(white);
     rect(15,16,370,82,10); 
     noStroke();
     
-    fill(0,0,0);
+    fill(black);
+    textSize(22);
     text(textDisplay,18,57);
 
     //Buttons
     for (int i = 0; i < 5; i += 1 ){
        for (int k = 0; k < 5; k += 1) {
          if ( k < 2 && i < 2 ){
-           fill(244,239,239); // color : white
+           fill(light_grey); // color : grey + white
            rect(15, 107+(244*k), 167, 58, 5); // Clear & Zero buttons 
            rect(185, 107+(244*k), 82, 58, 5); // Dot & Divide buttons
            noStroke();
          } 
          if ( k < 3 && i < 3 ){
-           fill(255,255,255); // color : white
+           fill(white); // color : white
            rect(15+(85*i), 168+(61*k), 82, 58, 5); // number buttons 1-9
            noStroke();
          }
          if ( k < 4 && i < 4 ){
-           fill(244,239,239); // color : grey + white
+           fill(light_grey); // color : grey + white
            rect(270, 107+(61*k), 115, 58, 5); // backspace & operator buttons 
            noStroke();
          }
          if ( k == 4 ){
-           fill(197,229,239); // color : blue pastel
+           fill(blue_pastel); // color : blue pastel
            rect(270, 107+(61*k), 115, 58, 5); // total buttons 
            noStroke();
          }
@@ -76,35 +82,31 @@ void drawElements() //Draw all display io, text, buttons and image
     }
     
     //Text above buttons
-    textFont(f);
-    fill(15,76,129); // color : blue same as bg
-    for( int i=0 ; i < 4; i++ ){
-      for (int k=0; k < 4; k++ ){
+    textSize(20);
+    fill(blue); // color : blue same as bg
+    for( int i=0 ; i < 5; i++ ){
+      for (int k=0; k < 5; k++ ){
          if (i < 2 & k < 2){
            text(text_others[i][k], 93+(131*i), 140+(247*k)); // text Clear, Zero, Dot and Divide buttons
          }
          if (i < 3 & k < 3){
            text(text_numbers[i][k], 49+(84*i), 202+(61*k)); // text number 1-9
          }
-         if (i < 4 & k < 4){
-           text(text_operators[k], 324, 202+(61*k)); // text operator and total 
+         if (i < 5 & k < 5){
+           text(text_operators[k], 322, 141+(61*k)); // text backspace , operators and total 
          }
       }
     }
     
-    //image above backspace button
-    img = loadImage("backspace.png");
-    image(img,317,125,25,15);
-    
     //choose size
-    textFont(f_resize);
-    fill(255,255,255);
+    textSize(13);
+    fill(white); // color : white
     text("Size : ",230,435);
     for (int i=0; i<2; i++){
         rect(282+(28*i)+i, 420, 21, 21, 5);
         noStroke();
     }
-    fill(15,76,129);
+    fill(blue);
     for (int i=0; i<2; i++){
         text(text_resize[i], 286+(29*i), 435); //text size x1, x2
     }
